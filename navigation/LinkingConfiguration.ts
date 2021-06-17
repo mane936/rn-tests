@@ -12,9 +12,9 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Robots: {
             screens: {
-              TabOneScreen: 'one',
+              Robots: 'robots',
             },
           },
           TabTwo: {

@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import {useWindowDimensions, StyleSheet, Button } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
+  const handlePress = () => {
+
+  }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
+      <View style={styles.topNavbar}>
+        <Button onPress={() => {}} title="learn" color="#000"/>
+      </View>
+      <Text style={styles.title}>Available Roombas</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="/screens/TabOneScreen.tsx" />
     </View>
@@ -19,6 +25,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  topNavbar: {
+    display: "flex",
+    width: "100vw",
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
