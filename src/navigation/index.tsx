@@ -6,19 +6,37 @@
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+const {useState, useEffect} = React;
 import { ColorSchemeName } from 'react-native';
+import firebase from 'firebase'
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
+import AppStack from './AppStack';
+import AuthStack from './AuthStack';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const [user, setUser] = useState<any>(null);
+
+  const checkUser =() => {
+    firebase.auth().onAuthStateChanged(_user => {
+      if(_user) setUser(_user)
+    })
+  }
+
+  useEffect(() => {
+    checkUser();
+  },[])
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+        {user !== null ? <AppStack/> : <AuthStack />}
+
+      {/* <RootNavigator /> */}
     </NavigationContainer>
   );
 }
