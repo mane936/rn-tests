@@ -3,8 +3,6 @@ import {Dimensions, useWindowDimensions, View, StyleSheet} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler'
 
 const { height, width } = Dimensions.get('screen') // TODO: change this to useWindowDimensions
-
-
 interface Props {
   placeholder: string;
   onChangeText: (text:string) => void;
@@ -12,7 +10,6 @@ interface Props {
 }
 
 const Input:FC<Props> = (props) => {
-  
   return (
     <View style={styles.container}>
       <TextInput style={styles.input} placeholder={props.placeholder} secureTextEntry={props.secureTextEntry || false} onChangeText={props.onChangeText}  />
