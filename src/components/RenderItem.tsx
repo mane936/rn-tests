@@ -1,9 +1,9 @@
-import React , {FC} from 'react';
-import {Dimensions, StyleSheet, View, Text} from 'react-native';
-import {Button} from '.'
-import formatTime from '../helpers/formatTime';
+import React, { FC } from "react";
+import { Dimensions, StyleSheet, View, Text } from "react-native";
+import { Button } from ".";
+import formatTime from "../helpers/formatTime";
 
-const { width, height}  = Dimensions.get('screen')
+const { width, height } = Dimensions.get("screen");
 
 interface Props {
   ip: string;
@@ -14,49 +14,52 @@ interface Props {
   deleteItem: (itemId: string) => void;
 }
 
-const App : FC<Props> = (props) => {
+const App: FC<Props> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.text}>{props.ip}</Text>
-        <Text>Active: {formatTime(props.timeStamp)}</Text>
-        <Button title="Track" onPress={() => props.navigation.navigate('item', {
-          itemId: props.itemId,
-          itemIp: props.ip
-        })} />
+        <Button
+          title="Track"
+          onPress={() =>
+            props.navigation.navigate("item", {
+              itemId: props.itemId,
+              itemIp: props.ip,
+            })
+          }
+        />
         <Button title="Delete" onPress={() => props.deleteItem(props.itemId)} />
       </View>
+      <Text>Active: {formatTime(props.timeStamp)}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default App
-
+export default App;
 
 const styles = StyleSheet.create({
   container: {
     width: width / 1.1,
-    alignSelf: 'center',
+    // alignSelf: "center",
+    justifyContent: "center",
     marginVertical: 10,
     padding: 20,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    shadowColor: '#ccc',
+    shadowColor: "#ccc",
     shadowOpacity: 0.9,
-
   },
-  box:{
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems: 'center',
+  box: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: -10,
   },
-  text:{
-    width: '60%',
-
+  text: {
+    // width: "60%",
   },
-  
-})
+});

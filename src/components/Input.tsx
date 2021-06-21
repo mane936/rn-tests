@@ -1,33 +1,43 @@
-import React, {FC} from 'react'
-import {Dimensions, useWindowDimensions, View, StyleSheet} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler'
+import React, { FC } from "react";
+import {
+  Dimensions,
+  useWindowDimensions,
+  View,
+  StyleSheet,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
 
-const { height, width } = Dimensions.get('screen') // TODO: change this to useWindowDimensions
+const { height, width } = Dimensions.get("screen"); // TODO: change this to useWindowDimensions
 interface Props {
   placeholder: string;
-  onChangeText: (text:string) => void;
+  onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
 }
 
-const Input:FC<Props> = (props) => {
+const Input: FC<Props> = (props) => {
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder={props.placeholder} secureTextEntry={props.secureTextEntry || false} onChangeText={props.onChangeText}  />
+      <TextInput
+        style={styles.input}
+        placeholder={props.placeholder}
+        secureTextEntry={props.secureTextEntry || false}
+        onChangeText={props.onChangeText}
+      />
     </View>
-  )
-}
+  );
+};
 
 export default Input;
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     width: width / 1.1,
-    alignSelf: 'center',
-    backgroundColor: '#e3e3e3',
+    alignSelf: "center",
+    backgroundColor: "#e3e3e3",
     borderRadius: 5,
-    marginVertical:10
+    marginVertical: 10,
   },
-  input:{
-    padding: 15
-  }
-})
+  input: {
+    padding: 15,
+  },
+});

@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import firebase from "firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDE-duqOHyQlfl1iUi0Q93vv0SoEFUoPZo",
@@ -6,7 +6,7 @@ const firebaseConfig = {
   projectId: "altlabsrobots",
   storageBucket: "altlabsrobots.appspot.com",
   messagingSenderId: "782931570635",
-  appId: "1:782931570635:web:4dff65ee90d951f5f0504e"
+  appId: "1:782931570635:web:4dff65ee90d951f5f0504e",
 };
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
