@@ -22,7 +22,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 
   const checkUser =() => {
     firebase.auth().onAuthStateChanged(_user => {
-      if(_user) setUser(_user)
+      setUser(_user) 
     })
   }
 

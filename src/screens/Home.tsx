@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useState} from 'react'
 import {Alert, View, Text, StyleSheet } from 'react-native';
-import {Button, Input, PostRender} from '../components'
+import {Button, Input, ItemRender} from '../components'
 import { FlatList } from 'react-native-gesture-handler';
 import firebase from 'firebase'
-import validateIPAddress from '../helpers/validateIpAddress';
+import ApiHandlers from '../api/ApiHandlers';
 // const _net = require("net");
 
 
@@ -15,38 +15,41 @@ const App : FC = (props) => {
   const [addItemErrors, setAddItemErrors] = useState<string>("")
  
   useEffect(() => {
-    fetchCurrentUser()
-    fetchPendingItems()
+    const fetchApi = async () => {
+      const _user = await ApiHandlers.fetchCurrentUser()
+      setUser(_user)
+      firebase.firestore().collection("items").where("user.uid", '==', _user.uid).onSnapshot(querySnapshot => {
+        const documents = querySnapshot.docs;
+        setItems(documents)
+      })
+    }
+    fetchApi()
   }, [])
 
   const signOut = () => {
     firebase.auth().signOut()
   }
 
-  const fetchCurrentUser = async () => {
-    const _user = await firebase.auth().currentUser!
-    const uid = _user.uid
-    const data = await firebase.firestore().collection('users').doc(uid).get()
-    setUser({
-      uid: user,
-      ...data.data()
-    })
+  const deleteItem = (id: string) => {
+    try {
+      ApiHandlers.deleteItem(id)
+    } catch(err) {
+      console.error(err)
+    }
   }
 
-  const fetchPendingItems = async () => {
-    // const items = await firebase.firestore().collection('items').where('approved', '==', true).get();
-    firebase.firestore().collection("items").where("approved", '==', true).onSnapshot(querySnapshot => {
-      const documents = querySnapshot.docs;
-      setItems(documents)        
-    })
-    
+  const addItem = async () => {
+    try {
+      console.log("IP",ip)
+      await ApiHandlers.addItem(ip, user)
+    } catch (err: any) {
+      setAddItemErrors(err.message)
+    }
   }
-
-  const 
 
   const renderItem = ({item}:{item:any}) => {
     const itemData = item.data();
-    return <PostRender ip={itemData.ip} timeStamp={itemData.timeStamp} approved={itemData.approved} itemId={item.id} navigation={props.navigation} deleteItem={deleteItem} />
+    return <ItemRender ip={itemData.ip} timeStamp={itemData.timeStamp} approved={itemData.approved} itemId={item.id} navigation={props.navigation} deleteItem={deleteItem} />
   }
 
   return (
@@ -67,11 +70,11 @@ const App : FC = (props) => {
           <Text style={{color: "red"}}>{addItemErrors}</Text>
           <Button title="Add IP" onPress={addItem} />
         </View>
-        {/* {user ? user.isAdmin ? (
+        {user ? user.isAdmin ? (
           <View>
-            <Button title="Dashboard" onPress={() => props.navigation.navigate('dashboard')} />
+            <Button title="Admin dashboard" onPress={() => props.navigation.navigate('dashboard')} />
           </View>
-        ) : null : null} */}
+        ) : null : null}
       </View>
     </View>
   )

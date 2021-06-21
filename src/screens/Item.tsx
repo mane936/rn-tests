@@ -6,6 +6,7 @@ interface Props {
   route: { 
     params: {
       itemId: string; 
+      itemIp: string;
     }
   }
 }
@@ -17,8 +18,8 @@ const App : FC<Props> = (props) => {
     <View style={styles.container}>
       <Button title="Back" onPress={() => props.navigation.goBack()}  />
       <Text>Tree.JS screen</Text> 
-      <Text>{props.route.params.itemId}</Text> 
-
+      <Text>item ID: {props.route.params.itemId}</Text> 
+      <Text>item IP: {props.route.params.itemIp}</Text> 
     </View>
   )
 }

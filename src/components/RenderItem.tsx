@@ -1,6 +1,7 @@
 import React , {FC} from 'react';
 import {Dimensions, StyleSheet, View, Text} from 'react-native';
 import {Button} from '.'
+import formatTime from '../helpers/formatTime';
 
 const { width, height}  = Dimensions.get('screen')
 
@@ -13,30 +14,17 @@ interface Props {
   deleteItem: (itemId: string) => void;
 }
 
-const formatTime = (timeStamp: number) : any => {
-  const calculatedTime = Date.now() - timeStamp;
-  if((((calculatedTime / 1000) / 60) / 60) / 24 > 1) {
-    return `${Math.round((((calculatedTime / 1000) / 60) / 60) / 24)} d`
-  } else if(((calculatedTime / 1000) / 60) > 60 ) {
-    return `${Math.round(((calculatedTime / 1000) / 60) / 60)} hr`
-  } else if((calculatedTime / 1000) > 60) {
-    return `${Math.round((calculatedTime / 1000) / 60 )} min`;
-  } else {
-    return `${Math.round(calculatedTime / 1000)} s`;
-  }  
-}
-
-
 const App : FC<Props> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.text}>{props.ip}</Text>
-        <Text>{formatTime(props.timeStamp)}</Text>
-        <Button title="Delete" onPress={() => props.deleteItem(props.itemId)} />
+        <Text>Active: {formatTime(props.timeStamp)}</Text>
         <Button title="Track" onPress={() => props.navigation.navigate('item', {
-          itemId: props.itemId
+          itemId: props.itemId,
+          itemIp: props.ip
         })} />
+        <Button title="Delete" onPress={() => props.deleteItem(props.itemId)} />
       </View>
     </View>
   )

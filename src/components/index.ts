@@ -1,8 +1,7 @@
 import Input from './Input';
 import Button from './Button';
-import ApprovalRender from './RenderPendingPost';
-import PostRender from './RenderPost';
+import ItemRender from './RenderItem';
 
 
 
-export {Input, Button, ApprovalRender, PostRender}
+export {Input, Button, ItemRender}
