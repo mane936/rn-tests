@@ -28,7 +28,7 @@ const App : FC = (props) => {
 
   const renderItem = ({item}:{item:any}) => {
     const itemData = item.data();
-    return <ApprovalRender msg={itemData.msg} timeStamp={itemData.timeStamp} approved={itemData.approved} onApprove={() => onApprove(item.id)} onReject={() => onReject(item.id)} />
+    return <ApprovalRender ip={itemData.ip} timeStamp={itemData.timeStamp} approved={itemData.approved} onApprove={() => onApprove(item.id)} onReject={() => onReject(item.id)} />
   }
 
   useEffect(() => {

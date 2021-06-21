@@ -5,7 +5,7 @@ import {Button} from '.'
 const { width, height}  = Dimensions.get('screen')
 
 interface Props {
-  msg: string;
+  ip: string;
   approved: string;
   timeStamp: number;
   onApprove: () => void;
@@ -30,7 +30,7 @@ const App : FC<Props> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.text}>{props.msg}</Text>
+        <Text style={styles.text}>{props.ip}</Text>
         <Text>{formatTime(props.timeStamp)}</Text>
       </View>
       <View style={styles.buttons}>

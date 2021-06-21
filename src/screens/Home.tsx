@@ -3,13 +3,16 @@ import {Alert, View, Text, StyleSheet } from 'react-native';
 import {Button, Input, PostRender} from '../components'
 import { FlatList } from 'react-native-gesture-handler';
 import firebase from 'firebase'
+import validateIPAddress from '../helpers/validateIpAddress';
+// const _net = require("net");
 
 
 const App : FC = (props) => {
 
-  const [msg, setMsg] = useState<string|null>(null)
+  const [ip, setIp] = useState<string|null>(null)
   const [user, setUser] = useState<any>(null) // TODO missing typechecking
   const [items, setItems] = useState<any>([]) 
+  const [addItemErrors, setAddItemErrors] = useState<string>("")
  
   useEffect(() => {
     fetchCurrentUser()
@@ -39,35 +42,11 @@ const App : FC = (props) => {
     
   }
 
+  const 
+
   const renderItem = ({item}:{item:any}) => {
     const itemData = item.data();
-    
-    return <PostRender msg={itemData.msg} timeStamp={itemData.timeStamp} approved={itemData.approved} itemId={item.id} navigation={props.navigation} />
-  }
-
-  const checkIP = (IP: string) => {
-    const regExp = new RegExp('\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b')
-    return regExp.test(IP)
-  }
-
-
-  const post = async () => {
-    // if(!user) fetchCurrentUser()
-    if(msg) {
-      const data = {
-        msg,
-        timeStamp: Date.now(),
-        approved: false,
-        user, // TODO missing typechecking
-      }
-      try{
-        await firebase.firestore().collection('items').add(data);
-      } catch(err) {
-        console.error(err);
-      }
-    } else {
-      Alert.alert(`Missing fileds`)
-    }
+    return <PostRender ip={itemData.ip} timeStamp={itemData.timeStamp} approved={itemData.approved} itemId={item.id} navigation={props.navigation} deleteItem={deleteItem} />
   }
 
   return (
@@ -82,17 +61,17 @@ const App : FC = (props) => {
         )}
       </View>
       <View style={{flex: 0.5}}>
-        <Text>Home screen</Text>
         <Button title="Sign Out" onPress={signOut}/>
         <View>
-          <Input placeholder="Write something here" onChangeText={(text) => setMsg(text)} />
-          <Button title="Add IP" onPress={post} />
+          <Input placeholder="Write your Roomba's IP" onChangeText={(text) => setIp(text)} />
+          <Text style={{color: "red"}}>{addItemErrors}</Text>
+          <Button title="Add IP" onPress={addItem} />
         </View>
-        {user ? user.isAdmin ? (
+        {/* {user ? user.isAdmin ? (
           <View>
             <Button title="Dashboard" onPress={() => props.navigation.navigate('dashboard')} />
           </View>
-        ) : null : null}
+        ) : null : null} */}
       </View>
     </View>
   )

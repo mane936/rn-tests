@@ -2,12 +2,23 @@ import React, {FC, useEffect, useState} from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from '../components';
 
+interface Props {
+  route: { 
+    params: {
+      itemId: string; 
+    }
+  }
+}
 
-const App : FC = (props) => {  
+const App : FC<Props> = (props) => {  
+  console.log(props);
+  
   return (
     <View style={styles.container}>
       <Button title="Back" onPress={() => props.navigation.goBack()}  />
       <Text>Tree.JS screen</Text> 
+      <Text>{props.route.params.itemId}</Text> 
+
     </View>
   )
 }

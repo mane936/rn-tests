@@ -5,11 +5,12 @@ import {Button} from '.'
 const { width, height}  = Dimensions.get('screen')
 
 interface Props {
-  msg: string;
+  ip: string;
   approved: string;
   timeStamp: number;
   itemId: string;
   navigation: any;
+  deleteItem: (itemId: string) => void;
 }
 
 const formatTime = (timeStamp: number) : any => {
@@ -30,8 +31,9 @@ const App : FC<Props> = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.text}>{props.msg}</Text>
+        <Text style={styles.text}>{props.ip}</Text>
         <Text>{formatTime(props.timeStamp)}</Text>
+        <Button title="Delete" onPress={() => props.deleteItem(props.itemId)} />
         <Button title="Track" onPress={() => props.navigation.navigate('item', {
           itemId: props.itemId
         })} />
